@@ -1,7 +1,9 @@
 from urlparse import urlparse
 from django.db.models.base import Model
-from django.db.models.fields import CharField, TextField, URLField
+from django.db.models.fields import CharField, TextField, URLField, DateTimeField, BooleanField
+from django.utils import timezone
 from utils import ModelMixins
+
 
 class ArticleModel(Model, ModelMixins):
     AXEL_URLS = ('onet.pl', )
@@ -12,6 +14,8 @@ class ArticleModel(Model, ModelMixins):
     article = TextField(null=True, blank=True)
     image_url = URLField(null=True, blank=True)
     audio_url = URLField(null=True, blank=True)
+
+    time_added = DateTimeField(blank=True, auto_now_add=True, verbose_name='Created at')
 
     @property
     def is_downloaded(self):

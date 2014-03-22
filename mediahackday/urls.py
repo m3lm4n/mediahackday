@@ -1,16 +1,16 @@
 from django.conf.urls import patterns, include, url
 from apn.resources import TokenResource
 # Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
+from django.contrib import admin
 # admin.autodiscover()
-from synchronize.resources import ArticleResource
+from synchronize.resources import ArticleResource, ArticlesResource
 
 urlpatterns = patterns('',
     # Examples:
     url(r'^token/$', TokenResource.as_view(), name='token'),
-    url(r'^synchronize/article/$', ArticleResource.as_view(), name='token'),
+    url(r'^synchronize/article/$', ArticleResource.as_view(), name='synchronize'),
 
-    # url(r'^articles/$', Articles.as_view(), name='token'),
+    url(r'^articles/$', ArticlesResource.as_view(), name='articles'),
     # url(r'^mediahackday/', include('mediahackday.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

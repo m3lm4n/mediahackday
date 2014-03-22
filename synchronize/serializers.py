@@ -6,3 +6,4 @@ class ArticleSerializer(ModelSerializer):
     class Meta():
         model = ArticleModel
         required_fields = ('url', )
+        exclude = ('time_added', )
