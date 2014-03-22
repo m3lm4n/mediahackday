@@ -1,3 +1,4 @@
+import urllib
 from urlparse import urlparse
 from django.db.models.base import Model
 from django.db.models.fields import CharField, TextField, URLField, DateTimeField, BooleanField
