@@ -36,8 +36,12 @@ class ArticleModel(Model, ModelMixins):
         pass
 
     def download_axel(self):
-        pass
-        # response = requests.get('http://ipool-extern.s.asideas.de:9090/api/v2/search?q=%slimit=1' % self.url)
-        # data = json.loads(response.content)
+        response = requests.get('http://ipool-extern.s.asideas.de:9090/api/v2/search?q=%slimit=1' % self.url)
+        data = json.loads(response.content)
+        article = data['documents'][0]
+        if data['documents']:
+            self.title = article['title']
+            self.article = article['content']
+
 
 
