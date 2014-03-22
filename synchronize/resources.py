@@ -1,3 +1,4 @@
+from django.db.models.query_utils import Q
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
@@ -10,7 +11,7 @@ class ArticlesResource(GenericAPIView):
     serializer_class = ArticleSerializer
 
     def post(self, request):
-        ArticleModel.objects.filter(audio_url__isnull=True).delete()
+        ArticleModel.objects.filter(Q(audio_url__isnull=True) | Q(title__isnull=True)).delete()
 
         serializer = self.get_serializer(data=request.DATA)
         if not serializer.is_valid():

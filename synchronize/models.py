@@ -39,8 +39,8 @@ class ArticleModel(Model, ModelMixins):
         elif stripped_host in ArticleModel.AXEL_URLS:
             print 'Downloading axel'
             return_val= self.download_axel(stripped_host)
-
-        self.save()
+        if return_val:
+            self.save()
         return return_val
 
     def download_spiegel(self, url):
@@ -75,9 +75,8 @@ class ArticleModel(Model, ModelMixins):
 
         self.article = article
 
-        self.generate_sound_file(article)
+        return self.generate_sound_file(article)
 
-        return True
 
     def download_axel(self, stripped_host):
         query = self.url
@@ -119,11 +118,11 @@ class ArticleModel(Model, ModelMixins):
                             max_pow = pow
                             biggest = ref
 
-        if data['documents']:
+        if data['documents'] and 'title' in article and 'content' in article:
             self.title = article['title']
             self.article = article['content']
             self.image_url = biggest.get('url')
-            self.generate_sound_file(self.article)
+            return self.generate_sound_file(self.article)
 
         return True
 
