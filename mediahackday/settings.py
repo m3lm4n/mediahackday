@@ -137,6 +137,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'github_hook',
     'apn',
+    'synchronize',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
