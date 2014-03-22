@@ -77,6 +77,7 @@ class ArticleModel(Model, ModelMixins):
 
         self.generate_sound_file(article)
 
+        return True
 
     def download_axel(self, stripped_host):
         query = self.url
@@ -123,6 +124,8 @@ class ArticleModel(Model, ModelMixins):
             self.article = article['content']
             self.image_url = biggest.get('url')
             self.generate_sound_file(self.article)
+
+        return True
 
     def md5(self, str):
         return hashlib.md5(str).hexdigest()
