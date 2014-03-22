@@ -10,10 +10,8 @@ import re
 import hashlib
 
 class ArticleModel(Model, ModelMixins):
-    AXEL_URLS = ('www.welt.de', 'welt.de', 'sportbild.de', 'www.sportbild.de', 'bild.de', 'www.bild.de',
-                 'computerbild.de', 'www.computerbild.de', 'rollingstone.de', 'www.rollingstone.de'
-    )
-    SPIEGEL_URLS = ('www.spiegel.de', )
+    AXEL_URLS = ('welt.de', 'sportbild.de', 'bild.de', 'computerbild.de', 'abendblatt.de', 'morgenpost.de')
+    SPIEGEL_URLS = ('spiegel.de', )
 
     API_KEY = "XhnrxYi7fiGrU4kFWxMVmUKHmIz19d7e"
 
@@ -30,16 +28,19 @@ class ArticleModel(Model, ModelMixins):
         return bool(self.title)
 
     def download(self):
+        return_val = None
         url = urlparse(self.url)
         print url.hostname
-        if url.hostname in ArticleModel.SPIEGEL_URLS:
+        stripped_host = ".".join(url.hostname.rsplit(".")[-2:])
+        if stripped_host in ArticleModel.SPIEGEL_URLS:
             print 'Downloading spiegel'
-            self.download_spiegel(url)
-        elif url.hostname in ArticleModel.AXEL_URLS:
+            return_val = self.download_spiegel(stripped_host)
+        elif stripped_host in ArticleModel.AXEL_URLS:
             print 'Downloading axel'
-            self.download_axel(url)
+            return_val= self.download_axel(stripped_host)
 
         self.save()
+        return return_val
 
     def download_spiegel(self, url):
         query = self.url
@@ -76,19 +77,28 @@ class ArticleModel(Model, ModelMixins):
         self.generate_sound_file(article)
 
 
-    def download_axel(self, url):
+    def download_axel(self, stripped_host):
         query = self.url
-        if url.hostname == 'welt.de' or url.hostname == 'www.welt.de':
+        if stripped_host == 'welt.de' or stripped_host == 'abendblatt.de' or stripped_host == 'morgenpost.de':
             matches = re.search("article([0-9]+?)/", self.url, re.S)
-            query =  matches.group(1)
+        if stripped_host == 'computerbild.de':
+            matches = re.search("([0-9]+?)\.html", self.url, re.S)
+        if stripped_host == 'bild.de' or stripped_host == 'sportbild.de':
+            matches = re.search("([0-9]{6,})", self.url, re.S)
 
-        print 'http://ipool-extern.s.asideas.de:9090/api/v2/search?q=%22http%3A%2F%2Fwww.welt.de%2Fvermischtes%2Farticle126077386%2FChina-meldet-Sichtung-moeglicher-Wrackteile.html%22&limit=1'
+        if not matches:
+            return False
+        query =  matches.group(1)
         url = 'http://ipool-extern.s.asideas.de:9090/api/v2/search?q=%s&limit=1' % urllib.quote_plus('"%s"' % query)
         print url
         response = requests.get(url)
         try:
             data = json.loads(response.content)
         except ValueError:
+            return False
+
+        print data
+        if not data['documents']:
             return False
         article = data['documents'][0]
         biggest = {}
@@ -98,6 +108,8 @@ class ArticleModel(Model, ModelMixins):
                     max_pow = 0
                     for ref in media['references']:
                         if not 'width' in ref or not 'height' in ref:
+                            if not biggest.keys():
+                                biggest = ref
                             continue
 
                         pow = ref['width']*ref['height']
@@ -110,6 +122,7 @@ class ArticleModel(Model, ModelMixins):
             self.article = article['content']
             self.image_url = biggest.get('url')
 
+<<<<<<< HEAD
             self.generate_sound_file(self.article)
 
     def md5(self, str):
@@ -146,5 +159,8 @@ class ArticleModel(Model, ModelMixins):
 
 
 
+=======
+        return True
+>>>>>>> d03a2219ec19db882f117beada64a38994884a50
 
 
