@@ -139,7 +139,7 @@ class ArticleModel(Model, ModelMixins):
             "md5" : self.md5( self.md5(self.API_KEY) + token),
             "text": text,
             "contentType": "text/plain",
-            "voiceId": "us_eric",
+            "voiceId": "de_hans",
             "codecId": "mp3/22050"
         }
         
