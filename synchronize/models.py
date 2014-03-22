@@ -147,10 +147,10 @@ class ArticleModel(Model, ModelMixins):
         }
         print params
         response = requests.post(api_url + 'speechfiles/', params = params)
-
         try:
             data = json.loads(response.content)
         except ValueError:
+            print response.content
             return False
 
         print data

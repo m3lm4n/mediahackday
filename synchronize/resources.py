@@ -10,7 +10,7 @@ class ArticlesResource(GenericAPIView):
     serializer_class = ArticleSerializer
 
     def post(self, request):
-        ArticleModel.objects.filter(title__isnull=True).delete()
+        ArticleModel.objects.filter(audio_url__isnull=True).delete()
 
         serializer = self.get_serializer(data=request.DATA)
         if not serializer.is_valid():
