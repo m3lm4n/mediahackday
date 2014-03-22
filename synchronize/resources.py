@@ -13,7 +13,8 @@ class ArticlesResource(GenericAPIView):
 
         serializer = self.get_serializer(data=request.DATA)
         if not serializer.is_valid():
-            return Response(data=serializer.data, status=HTTP_200_OK)
+            instance = ArticleModel.objects.get(url=request.DATA['url'])
+            return Response(data=self.get_serializer(instance).data, status=HTTP_200_OK)
         serializer.save()
         if not serializer.object.is_downloaded:
             if not serializer.object.download():
