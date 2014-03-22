@@ -1,5 +1,5 @@
 import os, sys
-#import dekorator as project_module
+import synchronize as project_module
 
 # Django settings for mediahackday project.
 
@@ -10,20 +10,20 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
-#PROJECT_DIR = os.path.dirname(os.path.realpath(project_module.__file__))
+PROJECT_DIR = os.path.dirname(os.path.realpath(project_module.__file__))
 
-#PYTHON_BIN = os.path.dirname(sys.executable)
+PYTHON_BIN = os.path.dirname(sys.executable)
 
-#VAR_ROOT = os.path.join(PROJECT_DIR, 'var')
-#if not os.path.exists(VAR_ROOT):
-  #  os.mkdir(VAR_ROOT)
+VAR_ROOT = os.path.join(PROJECT_DIR, 'var')
+if not os.path.exists(VAR_ROOT): 
+    os.mkdir(VAR_ROOT)
 
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
- #       'NAME': os.path.join(VAR_ROOT, 'dev.db'),
+        'NAME': os.path.join(VAR_ROOT, 'dev.db'),
     }
 }
 
