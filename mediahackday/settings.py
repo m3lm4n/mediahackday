@@ -104,9 +104,11 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
+CORS_ORIGIN_ALLOW_ALL = True
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
+     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -137,6 +139,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'github_hook',
     'apn',
+    'corsheaders',
     'synchronize',
     'south',
     # Uncomment the next line to enable the admin:

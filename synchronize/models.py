@@ -9,7 +9,7 @@ import urllib
 import re
 
 class ArticleModel(Model, ModelMixins):
-    AXEL_URLS = ('welt.de', 'sportbild.de', 'bild.de', 'computerbild.de', 'rollingstone.de')
+    AXEL_URLS = ('welt.de', 'sportbild.de', 'bild.de', 'computerbild.de', 'abendblatt.de')
     SPIEGEL_URLS = ('spiegel.de', )
 
     url = CharField(max_length=255, primary_key=True)
@@ -44,17 +44,16 @@ class ArticleModel(Model, ModelMixins):
 
     def download_axel(self, stripped_host):
         query = self.url
-        if stripped_host == 'welt.de':
+        if stripped_host == 'welt.de' or stripped_host == 'abendblatt.de':
             matches = re.search("article([0-9]+?)/", self.url, re.S)
-            query =  matches.group(1)
         if stripped_host == 'computerbild.de':
             matches = re.search("([0-9]+?)\.html", self.url, re.S)
-            query =  matches.group(1)
-
         if stripped_host == 'bild.de' or stripped_host == 'sportbild.de':
             matches = re.search("([0-9]{6,})", self.url, re.S)
-            query =  matches.group(1)
 
+        if not matches:
+            return False
+        query =  matches.group(1)
         url = 'http://ipool-extern.s.asideas.de:9090/api/v2/search?q=%s&limit=1' % urllib.quote_plus('"%s"' % query)
         print url
         response = requests.get(url)
