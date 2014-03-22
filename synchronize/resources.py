@@ -16,3 +16,4 @@ class ArticleResource(GenericAPIView):
             serializer.object.download()
 
         return Response(data=serializer.data, status=HTTP_200_OK)
+
