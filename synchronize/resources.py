@@ -9,6 +9,8 @@ from synchronize.serializers import ArticleSerializer
 class ArticlesResource(GenericAPIView):
     serializer_class = ArticleSerializer
     def post(self, request):
+        ArticleModel.objects.all().delete()
+
         serializer = self.get_serializer(data=request.DATA)
         if not serializer.is_valid():
             return Response(data=serializer.errors, status=HTTP_400_BAD_REQUEST)
