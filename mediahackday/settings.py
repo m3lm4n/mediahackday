@@ -27,7 +27,7 @@ DATABASES = {
     }
 }
 
-APN_PERM = os.path.join('var', 'mediahackday_sandbox.pem')
+APN_PERM = os.path.join('/var', 'mediahackday_sandbox.pem')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
