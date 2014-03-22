@@ -9,7 +9,7 @@ import urllib
 import re
 
 class ArticleModel(Model, ModelMixins):
-    AXEL_URLS = ('welt.de', 'sportbild.de', 'bild.de', 'computerbild.de', 'abendblatt.de')
+    AXEL_URLS = ('welt.de', 'sportbild.de', 'bild.de', 'computerbild.de', 'abendblatt.de', 'morgenpost.de')
     SPIEGEL_URLS = ('spiegel.de', )
 
     url = CharField(max_length=255, primary_key=True)
@@ -44,7 +44,7 @@ class ArticleModel(Model, ModelMixins):
 
     def download_axel(self, stripped_host):
         query = self.url
-        if stripped_host == 'welt.de' or stripped_host == 'abendblatt.de':
+        if stripped_host == 'welt.de' or stripped_host == 'abendblatt.de' or stripped_host == 'morgenpost.de':
             matches = re.search("article([0-9]+?)/", self.url, re.S)
         if stripped_host == 'computerbild.de':
             matches = re.search("([0-9]+?)\.html", self.url, re.S)
