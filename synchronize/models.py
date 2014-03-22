@@ -47,6 +47,9 @@ class ArticleModel(Model, ModelMixins):
         if stripped_host == 'welt.de':
             matches = re.search("article([0-9]+?)/", self.url, re.S)
             query =  matches.group(1)
+        if stripped_host == 'computerbild.de':
+            matches = re.search("([0-9]+?)\.html", self.url, re.S)
+            query =  matches.group(1)
 
         if stripped_host == 'bild.de' or stripped_host == 'sportbild.de':
             matches = re.search("([0-9]{6,})", self.url, re.S)
@@ -59,6 +62,8 @@ class ArticleModel(Model, ModelMixins):
             data = json.loads(response.content)
         except ValueError:
             return False
+
+        print data
         if not data['documents']:
             return False
         article = data['documents'][0]
@@ -83,5 +88,6 @@ class ArticleModel(Model, ModelMixins):
             self.article = article['content']
             self.image_url = biggest.get('url')
 
+        return True
 
 
