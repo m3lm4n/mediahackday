@@ -145,7 +145,7 @@ class ArticleModel(Model, ModelMixins):
             "voiceId": "de_hans",
             "codecId": "mp3/22050"
         }
-        
+        print params
         response = requests.post(api_url + 'speechfiles/', params = params)
 
         try:
