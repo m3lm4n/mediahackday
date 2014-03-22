@@ -4,6 +4,8 @@ from apn.resources import TokenResource
 from django.contrib import admin
 # admin.autodiscover()
 from synchronize.resources import ArticleResource, ArticlesResource
+admin.autodiscover()
+from synchronize.resources import ArticleResource
 
 urlpatterns = patterns('',
     # Examples:
