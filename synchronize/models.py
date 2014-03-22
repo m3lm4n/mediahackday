@@ -131,6 +131,7 @@ class ArticleModel(Model, ModelMixins):
         return hashlib.md5(str).hexdigest()
 
     def generate_sound_file(self, text):
+        text = re.sub(r'<[^>]*?>', '', text)[:200]
         api_url = 'http://api.ivona.com/api/saas/rest/'
 
         response = requests.post(api_url + 'tokens/', params = { "email": "a.lastowski@nomtek.com"})
