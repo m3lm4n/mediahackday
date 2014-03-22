@@ -6,7 +6,7 @@ from synchronize.models import ArticleModel
 from synchronize.serializers import ArticleSerializer
 
 
-class ArticleResource(GenericAPIView):
+class ArticlesResource(GenericAPIView):
     serializer_class = ArticleSerializer
     def post(self, request):
         serializer = self.get_serializer(data=request.DATA)
@@ -18,8 +18,6 @@ class ArticleResource(GenericAPIView):
 
         return Response(data=serializer.data, status=HTTP_200_OK)
 
-class ArticlesResource(GenericAPIView):
-    serializer_class = ArticleSerializer
     def get(self, request):
         articles = ArticleModel.objects.order_by('time_added')
         serializer = self.get_serializer(articles, many=True)

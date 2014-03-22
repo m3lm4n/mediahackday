@@ -3,7 +3,8 @@ from django.db.models.base import Model
 from django.db.models.fields import CharField, TextField, URLField, DateTimeField, BooleanField
 from django.utils import timezone
 from utils import ModelMixins
-
+import requests
+import json
 
 class ArticleModel(Model, ModelMixins):
     AXEL_URLS = ('onet.pl', )
@@ -36,5 +37,7 @@ class ArticleModel(Model, ModelMixins):
 
     def download_axel(self):
         pass
+        # response = requests.get('http://ipool-extern.s.asideas.de:9090/api/v2/search?q=%slimit=1' % self.url)
+        # data = json.loads(response.content)
 
 
