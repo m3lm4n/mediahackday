@@ -121,8 +121,6 @@ class ArticleModel(Model, ModelMixins):
             self.title = article['title']
             self.article = article['content']
             self.image_url = biggest.get('url')
-
-<<<<<<< HEAD
             self.generate_sound_file(self.article)
 
     def md5(self, str):
@@ -143,8 +141,6 @@ class ArticleModel(Model, ModelMixins):
             "voiceId": "us_eric",
             "codecId": "mp3/22050"
         }
-
-        #import pdb; pdb.set_trace();
         
         response = requests.post(api_url + 'speechfiles/', params = params)
 
@@ -157,10 +153,6 @@ class ArticleModel(Model, ModelMixins):
         if "soundUrl" in data:
             self.audio_url = data["soundUrl"]
 
-
-
-=======
         return True
->>>>>>> d03a2219ec19db882f117beada64a38994884a50
 
 
