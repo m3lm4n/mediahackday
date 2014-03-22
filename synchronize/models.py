@@ -36,6 +36,8 @@ class ArticleModel(Model, ModelMixins):
             print 'Downloading axel'
             self.download_axel(url)
 
+        self.save()
+
     def download_spiegel(self, url):
         pass
 
