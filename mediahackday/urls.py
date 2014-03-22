@@ -2,10 +2,13 @@ from django.conf.urls import patterns, include, url
 from apn.resources import TokenResource
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+<<<<<<< Updated upstream
 # admin.autodiscover()
 from synchronize.resources import ArticleResource, ArticlesResource
+=======
 admin.autodiscover()
 from synchronize.resources import ArticleResource
+>>>>>>> Stashed changes
 
 urlpatterns = patterns('',
     # Examples:
