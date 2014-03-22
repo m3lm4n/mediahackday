@@ -10,3 +10,9 @@ class TokenResource(GenericAPIView):
     def post(self, request):
         APNTokenModel.create(token=request.DATA.get('token'))
         return Response(data={'success': True}, status=status.HTTP_200_OK)
+
+class TokenTestResource(GenericAPIView):
+    permission_classes = ()
+    def get(self, request):
+        APNTokenModel.send_notification(request.DATA.get('title', 'Testing...'))
+        return Response(data={'success': True}, status=status.HTTP_200_OK)

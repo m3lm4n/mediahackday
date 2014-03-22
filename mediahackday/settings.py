@@ -26,6 +26,9 @@ DATABASES = {
         'NAME': os.path.join(VAR_ROOT, 'dev.db'),
     }
 }
+
+APN_PERM = os.path.join(VAR_ROOT, 'sandbox.pem')
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # 'rest_framework.authentication.BasicAuthentication',
