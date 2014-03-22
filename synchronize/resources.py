@@ -1,7 +1,7 @@
 from django.http.response import HttpResponseBadRequest
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND
 from synchronize.models import ArticleModel
 from synchronize.serializers import ArticleSerializer
 
@@ -16,7 +16,8 @@ class ArticlesResource(GenericAPIView):
             return Response(data=serializer.errors, status=HTTP_400_BAD_REQUEST)
         serializer.save()
         if not serializer.object.is_downloaded:
-            serializer.object.download()
+            if not serializer.object.download():
+                return Response(status=HTTP_404_NOT_FOUND)
 
         return Response(data=serializer.data, status=HTTP_200_OK)
 
