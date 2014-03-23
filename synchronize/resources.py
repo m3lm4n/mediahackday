@@ -26,7 +26,7 @@ class ArticlesResource(GenericAPIView):
         return Response(data=serializer.data, status=HTTP_200_OK)
 
     def get(self, request):
-        articles = ArticleModel.objects.filter(title__isnull=False).order_by('time_added')
+        articles = ArticleModel.objects.filter(title__isnull=False, audio_url__isnull=False).order_by('time_added')
         serializer = self.get_serializer(articles, many=True)
         return Response(data={'data': serializer.data}, status=HTTP_200_OK)
 
