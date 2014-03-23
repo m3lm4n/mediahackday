@@ -52,11 +52,13 @@ class ArticleModel(Model, ModelMixins):
 
         url = 'http://dis.spiegel.de/sp-services/vdz/search/%s?user=Hackday:20142014' % query
         response = requests.get(url)
+        print response.headers
         try:
             dom = minidom.parseString(response.content)
         except:
             return False
-
+        if not dom.getElementsByTagName('titel'):
+            return False
         title = dom.getElementsByTagName('titel')[0].childNodes[0].nodeValue
 
         art_id = dom.getElementsByTagName('dokument')[0].getAttribute('id')
@@ -69,10 +71,10 @@ class ArticleModel(Model, ModelMixins):
         except:
             return False
 
-        matches = re.search("artikel>(.*?)<\/artikel>", response.content, re.S)
+        matches = re.search("artikel>(.*?)<\/artikel>", response.text, re.S)
         article = matches.group(1)
         article = re.sub("<(.*?)>"," ",article)
-
+        # article= unicode(article)
         self.article = article
 
         return self.generate_sound_file(article)
