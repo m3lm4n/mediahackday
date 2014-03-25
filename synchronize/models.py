@@ -14,7 +14,7 @@ class ArticleModel(Model, ModelMixins):
     AXEL_URLS = ('welt.de', 'sportbild.de', 'bild.de', 'computerbild.de', 'abendblatt.de', 'morgenpost.de')
     SPIEGEL_URLS = ('spiegel.de', )
 
-    API_KEY = "XhnrxYi7fiGrU4kFWxMVmUKHmIz19d7e"
+    API_KEY = "3SEP2YPGY5Y4saqDgDnkz148XZCibSwX"
 
     url = CharField(max_length=255, primary_key=True)
     title = CharField(max_length=255, null=True, blank=True)
@@ -135,7 +135,7 @@ class ArticleModel(Model, ModelMixins):
         text = re.sub(r'<[^>]*?>', '', text)[:200]
         api_url = 'http://api.ivona.com/api/saas/rest/'
 
-        response = requests.post(api_url + 'tokens/', params = { "email": "a.lastowski@nomtek.com"})
+        response = requests.post(api_url + 'tokens/', params = { "email": "michal@inventorum.com"})
 
         token = response.content[1:-1]
 
