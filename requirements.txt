@@ -1,5 +1,5 @@
 Cheetah==2.4.4
-Django==1.6.2
+Django==2.2.24
 Landscape-Client==13.07.3
 M2Crypto==0.21.1
 PAM==0.4.2
